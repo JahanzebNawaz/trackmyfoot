@@ -40,9 +40,15 @@ def upload_profile(instance, filename):
     return "Profiles/{user}/{filename}".format(user='{0}_{1}'.format(instance.first_name, instance.last_name),
                                                filename=filename)
 
+GENDER = [('Male', 'Male'), ('Female', "Female")]
+ 
 
 class User(AbstractUser):
-    username = None
+    # username 
+    # first_name
+    # last_name
+    # password
+    # password2
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField(blank=True, null=True)
     profile_image = models.ImageField(
@@ -51,6 +57,11 @@ class User(AbstractUser):
                         null=True, blank=True
     )
     phone_no = models.CharField(max_length=14)
+    gender = models.CharField(max_length=15, choices=GENDER, verbose_name='Gender')
+    height = models.DecimalField(max_digits=3, decimal_places=2)
+    weight = models.DecimalField(max_digits=3, decimal_places=2)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -61,3 +72,25 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+
+
+class Goal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
+    day = models.BooleanField()
+    week = models.BooleanField()
+    month = models.BooleanField()
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user
+
+
+class GoalDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
+    goal = models.ForeignKey(Goal, on_delete=models.CASCADE, verbose_name="Goal")
+
+    daily_target = models.PositiveIntegerField()
+    weekly_target = models.PositiveIntegerField()
+    monthly_target = models.PositiveIntegerField()
