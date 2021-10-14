@@ -70,15 +70,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializerSpecial(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'pk']
+        fields = ['pk']
 
 
 
 class GoalSerializer(serializers.HyperlinkedModelSerializer):
     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False)  
-    # user = serializers.ReadOnlyField(source='user.username')
+    user = serializers.ReadOnlyField(source='user.username')
     # user = serializers.ReadOnlyField()
-    user = UserSerializerSpecial()
+    # user = UserSerializerSpecial()
 
     class Meta:
         model = Goal
@@ -88,8 +88,8 @@ class GoalSerializer(serializers.HyperlinkedModelSerializer):
 
 class GoalDetailSerializer(serializers.HyperlinkedModelSerializer):
     goal = serializers.PrimaryKeyRelatedField(queryset=Goal.objects.all(), many=False)  
-    # user = serializers.ReadOnlyField(source='user.username')
-    user = UserSerializerSpecial()
+    user = serializers.ReadOnlyField(source='user.username')
+    # user = UserSerializerSpecial()
     
     class Meta:
         model = GoalDetails
