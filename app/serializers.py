@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.authtoken.models import Token
+from .models import Goal, GoalDetails
 
 
 User = get_user_model()
@@ -64,3 +65,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         Token.objects.create(user=user)
         return user
+
+
+class GoalSerializer(serializers.HyperlinkedModelSerializer):
+    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False)  
+    user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = Goal
+        fields = '__all__'
+
+
+
+class GoalDetailSerializer(serializers.HyperlinkedModelSerializer):
+    goal = serializers.PrimaryKeyRelatedField(queryset=Goal.objects.all(), many=False)  
+    user = serializers.ReadOnlyField(source='user.username')
+    
+    class Meta:
+        model = GoalDetails
+        fields = '__all__'

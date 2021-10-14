@@ -24,6 +24,8 @@ from app import views as app_views
 
 router = routers.DefaultRouter()
 router.register(r'users', app_views.UserViewSet)
+router.register(r'goals', app_views.GoalViewSet)
+router.register(r'goaldetails', app_views.GoalDetailsViewSet)
 
 
 urlpatterns = [

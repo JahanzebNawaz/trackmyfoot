@@ -57,6 +57,7 @@ class User(AbstractUser):
                         null=True, blank=True
     )
     phone_no = models.CharField(max_length=14)
+    age = models.PositiveIntegerField(default=18)
     gender = models.CharField(max_length=15, choices=GENDER, verbose_name='Gender')
     height = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     weight = models.DecimalField(max_digits=3, decimal_places=2, null=True)
@@ -76,21 +77,24 @@ class User(AbstractUser):
 
 class Goal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
-    day = models.BooleanField()
-    week = models.BooleanField()
-    month = models.BooleanField()
+    day = models.BooleanField(null=True, blank=True)
+    week = models.BooleanField(null=True, blank=True)
+    month = models.BooleanField(null=True, blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user
+        return '{}'.format(self.id)
 
 
 class GoalDetails(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE, verbose_name="Goal")
 
-    daily_target = models.PositiveIntegerField()
-    weekly_target = models.PositiveIntegerField()
-    monthly_target = models.PositiveIntegerField()
+    daily_target = models.PositiveIntegerField(null=True, blank=True)
+    weekly_target = models.PositiveIntegerField(null=True, blank=True)
+    monthly_target = models.PositiveIntegerField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return '{} {}'.format(self.id, self.goal)
