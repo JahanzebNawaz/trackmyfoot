@@ -15,9 +15,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         # fields = ['url','username','email', 'first_name', 'last_name', 'phone_no', 'date_of_birth', 'profile_image']
-        fields = "__all__"
+        # fields = "__all__"
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
         lookup_field = 'username'
+        exclude = ('user_permissions',)
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
