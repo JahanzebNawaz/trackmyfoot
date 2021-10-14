@@ -58,8 +58,8 @@ class User(AbstractUser):
     )
     phone_no = models.CharField(max_length=14)
     gender = models.CharField(max_length=15, choices=GENDER, verbose_name='Gender')
-    height = models.DecimalField(max_digits=3, decimal_places=2)
-    weight = models.DecimalField(max_digits=3, decimal_places=2)
+    height = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    weight = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
