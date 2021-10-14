@@ -67,9 +67,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserSerializerSpecial(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'pk']
+
+        
+
 class GoalSerializer(serializers.HyperlinkedModelSerializer):
     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False)  
-    user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.ReadOnlyField()
+    user = UserSerializerSpecial()
 
     class Meta:
         model = Goal
