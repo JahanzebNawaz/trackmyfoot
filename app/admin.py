@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from .models import Goal, GoalDetails
 
 User = get_user_model()
 
@@ -35,3 +36,5 @@ class UserAdmin(UserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Goal)
+admin.site.register(GoalDetails)
